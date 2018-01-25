@@ -65,7 +65,7 @@ contract REFToken {
     function REFToken() public {
         referrer[msg.sender] = msg.sender;
         totalReferrals[msg.sender] = 1;
-        RNS["anya"] = msg.sender;
+        RNS["REF"] = msg.sender;
     }
 
     /**
