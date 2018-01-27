@@ -137,7 +137,7 @@ contract REFToken {
      * @param _value The amount of tokens to be transferred
      */
     function transferFrom(address _from, address _to, uint256 _value) external {
-        var _allowance = allowed[_from][_to];
+        uint _allowance = allowed[_from][_to];
         balances[_to] = balances[_to]+_value;
         balances[_from] = safeSub(balances[_from], _value);
         allowed[_from][_to] = safeSub(_allowance, _value);
