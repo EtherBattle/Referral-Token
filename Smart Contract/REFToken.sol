@@ -326,10 +326,11 @@ contract REFToken {
                     "_referralReward": "The current referral reward",
                     "referrals": "The total referrals of the user",
                     "balance": "The user's balance",
-                    "nickname": "The user's latest nickname"
+                    "nickname": "The user's latest nickname",
+                    "isReferred": "Whether the user has been referred"
                 }
      */
-    function retrieveInfo() external view returns (uint256 _totalSupply, uint256 _referralReward, uint256 referrals, uint256 balance, bytes32 nickname) {
-        return (totalSupply, referralReward, totalReferrals[msg.sender], balances[msg.sender], latestNickname[msg.sender]);
+    function retrieveInfo() external view returns (uint256 _totalSupply, uint256 _referralReward, uint256 referrals, uint256 balance, bytes32 nickname, bool isReferred) {
+        return (totalSupply, referralReward, totalReferrals[msg.sender], balances[msg.sender], latestNickname[msg.sender], referrer[msg.sender] == 0x0);
     }
 }
