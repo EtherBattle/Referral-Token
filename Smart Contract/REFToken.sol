@@ -22,6 +22,7 @@ contract REFToken {
     mapping(address => address) referrer;
     //Referral name service, allowing you to claim a name for referrals instead of your ETH address
     mapping(bytes32 => address) RNS;
+    mapping(address => bytes32) latestNickname;
     mapping(address => uint256) totalReferrals;
     
     event Transfer(address indexed _from, address indexed _to, uint256 _value);
@@ -314,5 +315,21 @@ contract REFToken {
     function reserveRNS(bytes32 _nickname) payable external {
         require(msg.value >= (1 ether)/100 && RNS[_nickname] == 0x0);
         RNS[_nickname] = msg.sender;
+        latestNickname[msg.sender] = _nickname;
+        admin.transfer(msg.value);
+    }
+    
+    /**
+     * @notice Returns various data for the DApp UI
+     * @return {
+                    "_totalSupply": "The token's total supply",
+                    "_referralReward": "The current referral reward",
+                    "referrals": "The total referrals of the user",
+                    "balance": "The user's balance",
+                    "nickname": "The user's latest nickname"
+                }
+     */
+    function retrieveInfo() external view returns (uint256 _totalSupply, uint256 _referralReward, uint256 referrals, uint256 balance, bytes32 nickname) {
+        return (totalSupply, referralReward, totalReferrals[msg.sender], balances[msg.sender], latestNickname[msg.sender]);
     }
 }
